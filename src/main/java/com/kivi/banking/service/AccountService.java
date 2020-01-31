@@ -3,40 +3,18 @@ package com.kivi.banking.service;
 import com.kivi.banking.representation.Account;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class AccountService {
+public interface AccountService {
+    List<Account> getAll();
 
-    private ConcurrentHashMap<Long, Account> accountMap;
+    Account getAccountById(Long id);
 
-    public AccountService() {
-        Account acc1 = Account.builder()
-                .amount(new BigDecimal(100))
-                .id(10L)
-                .build();
+    void saveAccount(Account account);
 
-        Account acc2 = Account.builder()
-                .amount(new BigDecimal(500))
-                .id(11L)
-                .build();
+    void addAmountToAccountBalanceById(BigDecimal amount, Long accountId);
 
+    boolean isAccountBalanceEnoughForTransfer(BigDecimal amount, Long accountId);
 
-        this.accountMap = new ConcurrentHashMap<>();
-        accountMap.put(acc1.getId(), acc1);
-        accountMap.put(acc2.getId(), acc2);
-    }
-
-    public List<Account> getAll() {
-        return new ArrayList<>(accountMap.values());
-    }
-
-    public Account getAccountById(Long id) {
-        return accountMap.get(id);
-    }
-
-    public void saveAccount(Account account) {
-        accountMap.put(account.getId(), account);
-    }
+    void deductMoneyFromAccount(BigDecimal amount, Long lenderAccountId);
 }

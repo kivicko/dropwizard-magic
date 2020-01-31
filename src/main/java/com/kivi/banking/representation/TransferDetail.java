@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransferDetail {
-    private long id;
-    private long borrowerAccountId;
-    private long lenderAccountId;
+    private Long id;
+    private Long borrowerAccountId;
+    private Long lenderAccountId;
     private BigDecimal amount;
 }

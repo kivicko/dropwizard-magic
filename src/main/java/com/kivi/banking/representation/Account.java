@@ -13,5 +13,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Account {
     private long id;
+    private String accountNumber;
     private BigDecimal amount;
+
+    public void addAmount(BigDecimal amount) {
+        this.amount = this.amount.add(amount);
+    }
 }

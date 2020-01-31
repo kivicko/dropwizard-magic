@@ -2,6 +2,8 @@ package com.kivi.banking.resource;
 
 import com.kivi.banking.representation.Account;
 import com.kivi.banking.service.AccountService;
+import com.kivi.banking.service.impl.AccountServiceImpl;
+import lombok.NonNull;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -16,8 +18,10 @@ public class AccountResource {
 
     private final AccountService accountService;
 
-    public AccountResource(AccountService accountService) {
+    @Inject
+    public AccountResource(@NonNull AccountService accountService) {
         this.accountService = accountService;
+
     }
 
     @GET
