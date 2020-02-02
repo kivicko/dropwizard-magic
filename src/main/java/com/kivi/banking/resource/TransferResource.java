@@ -1,11 +1,14 @@
 package com.kivi.banking.resource;
 
+import com.kivi.banking.config.SystemMessage;
 import com.kivi.banking.representation.TransferDetail;
 import com.kivi.banking.service.AccountService;
 import com.kivi.banking.service.TransferService;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,6 +17,7 @@ import javax.ws.rs.core.Response.*;
 @Path("/transfer")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Slf4j
 public class TransferResource {
 
     private final AccountService accountService;
@@ -26,7 +30,10 @@ public class TransferResource {
     }
 
     @POST
-    public Response makeTransfer(TransferDetail transferDetail) {
+    public Response makeTransfer(@Valid TransferDetail transferDetail) {
+        if(accountService.checkAccountExists(transferDetail.getLenderAccountId())) {
+            return Response.status(Status.NOT_FOUND).entity(SystemMessage.RESOURCE_RESPONSE.LENDER_NOT_EXIST).build();
+        }
         if(!accountService.isAccountBalanceEnoughForTransfer(transferDetail.getAmount(), transferDetail.getLenderAccountId())) {
             return Response.status(Status.NOT_ACCEPTABLE).entity("Not enough balance.").build();
         }

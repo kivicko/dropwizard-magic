@@ -1,25 +1,12 @@
 package com.kivi.banking;
 
-import com.kivi.banking.resource.AccountResource;
-import com.kivi.banking.resource.TransferResource;
-import com.kivi.banking.service.AccountService;
-import com.kivi.banking.service.TransferService;
-import com.kivi.banking.service.impl.AccountServiceImpl;
-import com.kivi.banking.service.impl.TransferServiceImpl;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
-import io.dropwizard.jersey.setup.JerseyEnvironment;
-import io.dropwizard.jobs.GuiceJobsBundle;
-import io.dropwizard.jobs.Job;
-import io.dropwizard.jobs.JobsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import ru.vyarus.dropwizard.guice.GuiceBundle;
-
-import javax.inject.Singleton;
 
 public class App extends Application<BankingConfiguration> {
 

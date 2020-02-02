@@ -6,6 +6,7 @@ import com.kivi.banking.service.impl.AccountServiceImpl;
 import lombok.NonNull;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,6 +23,12 @@ public class AccountResource {
     public AccountResource(@NonNull AccountService accountService) {
         this.accountService = accountService;
 
+    }
+
+    @POST
+    public Response createAccount(@Valid Account account) {
+        accountService.saveAccount(account);
+        return Response.ok().build();
     }
 
     @GET

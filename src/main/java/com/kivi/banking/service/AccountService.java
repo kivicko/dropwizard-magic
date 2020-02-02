@@ -10,9 +10,11 @@ public interface AccountService {
 
     Account getAccountById(Long id);
 
+    boolean checkAccountExists(Long id);
+
     void saveAccount(Account account);
 
-    void addAmountToAccountBalanceById(BigDecimal amount, Long accountId);
+    void addAmountToAccount(BigDecimal amount, Long accountId);
 
     boolean isAccountBalanceEnoughForTransfer(BigDecimal amount, Long accountId);
 

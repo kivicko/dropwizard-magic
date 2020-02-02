@@ -1,5 +1,6 @@
 package com.kivi.banking.service.impl;
 
+import com.google.inject.Singleton;
 import com.kivi.banking.representation.Account;
 import com.kivi.banking.service.AccountService;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Singleton
 public class AccountServiceImpl implements AccountService {
 
     private ConcurrentHashMap<Long, Account> accountMap;
@@ -42,12 +44,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public boolean checkAccountExists(Long id) {
+        return accountMap.containsKey(id);
+    }
+
+    @Override
     public void saveAccount(Account account) {
         accountMap.put(account.getId(), account);
     }
 
     @Override
-    public void addAmountToAccountBalanceById(BigDecimal amount, Long accountId) {
+    public void addAmountToAccount(BigDecimal amount, Long accountId) {
 
     }
 
