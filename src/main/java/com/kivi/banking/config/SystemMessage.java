@@ -12,5 +12,7 @@ public class SystemMessage {
 
     public static class RESOURCE_RESPONSE {
         public static final String LENDER_NOT_EXIST = "Lender account does not exist.";
+        public static final String NOT_ENOUGH_BALANCE = "Not enough balance.";
+        public static final String SUBMITTED = "Your request submitted.";
     }
 }

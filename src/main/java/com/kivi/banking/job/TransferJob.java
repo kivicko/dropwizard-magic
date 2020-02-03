@@ -28,7 +28,7 @@ public class TransferJob extends Job {
     }
 
     @Override
-    public void doJob(JobExecutionContext context) throws JobExecutionException {
+    public void doJob(JobExecutionContext context) {
         TransferDetail nextDetail = transferService.getNextDetail();
         if(nextDetail == null) {
             return;

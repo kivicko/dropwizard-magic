@@ -31,14 +31,14 @@ public class TransferResource {
 
     @POST
     public Response makeTransfer(@Valid TransferDetail transferDetail) {
-        if(accountService.checkAccountExists(transferDetail.getLenderAccountId())) {
+        if(!accountService.checkAccountExists(transferDetail.getLenderAccountId())) {
             return Response.status(Status.NOT_FOUND).entity(SystemMessage.RESOURCE_RESPONSE.LENDER_NOT_EXIST).build();
         }
         if(!accountService.isAccountBalanceEnoughForTransfer(transferDetail.getAmount(), transferDetail.getLenderAccountId())) {
-            return Response.status(Status.NOT_ACCEPTABLE).entity("Not enough balance.").build();
+            return Response.status(Status.NOT_ACCEPTABLE).entity(SystemMessage.RESOURCE_RESPONSE.NOT_ENOUGH_BALANCE).build();
         }
         transferService.applyTransfer(transferDetail);
 
-        return Response.ok("Your request submitted").build();
+        return Response.ok(SystemMessage.RESOURCE_RESPONSE.SUBMITTED).build();
     }
 }

@@ -2,7 +2,6 @@ package com.kivi.banking.resource;
 
 import com.kivi.banking.representation.Account;
 import com.kivi.banking.service.AccountService;
-import com.kivi.banking.service.impl.AccountServiceImpl;
 import lombok.NonNull;
 
 import javax.inject.Inject;
@@ -22,19 +21,20 @@ public class AccountResource {
     @Inject
     public AccountResource(@NonNull AccountService accountService) {
         this.accountService = accountService;
-
     }
 
     @POST
     public Response createAccount(@Valid Account account) {
-        accountService.saveAccount(account);
+        accountService.createAccount(account);
         return Response.ok().build();
     }
 
     @GET
     @Path("/{id}")
-    public Response getAccountDetails(@PathParam("id") long id) {
-        return Response.ok(accountService.getAccountById(id)).build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Account getAccountDetails(@PathParam("id") long id) {
+        return accountService.getAccountById(id);
     }
 
     @GET

@@ -18,12 +18,12 @@ public class AccountServiceImpl implements AccountService {
         Account acc1 = Account.builder()
                 .amount(new BigDecimal(100))
                 .id(10L)
-                .accountNumber("number 1")
+                .accountNumber("1234567890")
                 .build();
 
         Account acc2 = Account.builder()
                 .amount(new BigDecimal(500))
-                .accountNumber("number 2")
+                .accountNumber("0987654321")
                 .id(11L)
                 .build();
 
@@ -49,26 +49,27 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void saveAccount(Account account) {
+    public void createAccount(Account account) {
         accountMap.put(account.getId(), account);
     }
 
     @Override
     public void addAmountToAccount(BigDecimal amount, Long accountId) {
-
+        accountMap.get(accountId).addAmount(amount);
     }
 
     @Override
     public boolean isAccountBalanceEnoughForTransfer(BigDecimal amount, Long accountId) {
-        if(accountMap.containsKey(accountId)) {
-            Account account = accountMap.get(accountId);
-            return account.getAmount().compareTo(amount) != -1;
+        if(!accountMap.containsKey(accountId)) {
+            return false;
         }
-        return false;
+
+        Account account = accountMap.get(accountId);
+        return account.getAmount().compareTo(amount) >= 0;
     }
 
     @Override
     public void deductMoneyFromAccount(BigDecimal amount, Long lenderAccountId) {
-        accountMap.get(lenderAccountId).addAmount(amount.negate());
+        accountMap.get(lenderAccountId).subtractAmount(amount.negate());
     }
 }

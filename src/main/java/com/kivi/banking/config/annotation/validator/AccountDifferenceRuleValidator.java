@@ -16,6 +16,10 @@ public class AccountDifferenceRuleValidator implements ConstraintValidator<Accou
 
         @Override
         public boolean isValid(TransferDetail detail, ConstraintValidatorContext constraintValidatorContext) {
+            if(detail.getLenderAccountId() == null || detail.getBorrowerAccountId() == null) {
+                return false;
+            }
+
             return BooleanUtils.isFalse(detail.getLenderAccountId().equals(detail.getBorrowerAccountId()));
         }
 }

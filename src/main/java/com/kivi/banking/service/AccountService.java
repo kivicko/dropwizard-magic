@@ -12,7 +12,7 @@ public interface AccountService {
 
     boolean checkAccountExists(Long id);
 
-    void saveAccount(Account account);
+    void createAccount(Account account);
 
     void addAmountToAccount(BigDecimal amount, Long accountId);
 

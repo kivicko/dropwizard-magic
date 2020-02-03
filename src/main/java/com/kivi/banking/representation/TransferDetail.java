@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @AccountDifferenceRule
 public class TransferDetail {
+    @NotNull
     private Long id;
 
     @NotNull
