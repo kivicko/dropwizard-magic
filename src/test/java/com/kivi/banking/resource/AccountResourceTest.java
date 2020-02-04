@@ -4,23 +4,26 @@ import com.kivi.banking.representation.Account;
 import com.kivi.banking.service.AccountService;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.eclipse.jetty.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AccountResourceTest {
 
     private static AccountService accountService = mock(AccountService.class);
@@ -41,7 +44,7 @@ public class AccountResourceTest {
                 .build();
     }
 
-    @AfterEach
+    @After
     public void afterEach() {
         reset(accountService);
     }
@@ -55,6 +58,19 @@ public class AccountResourceTest {
         assertNotNull(response);
         assertEquals(HttpStatus.OK_200, response.getStatus());
         verify(accountService).createAccount(validAccount);
+    }
+
+    @Test
+    public void shouldReturnUnprocessableEntityWhenGivenAccountIdExist() {
+        when(accountService.checkAccountExists(validAccount.getId())).thenReturn(true);
+
+        Response response = resource.target("/accounts")
+                .request()
+                .post(Entity.json(validAccount));
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY_422, response.getStatus());
+        verify(accountService, times(0)).createAccount(validAccount);
     }
 
     @Test
@@ -138,8 +154,6 @@ public class AccountResourceTest {
 
     @Test
     public void shouldReturnAllAccounts() {
-        reset(accountService);
-
         Account someAccount = new Account();
         when(accountService.getAll()).thenReturn(Arrays.asList(validAccount, someAccount));
 

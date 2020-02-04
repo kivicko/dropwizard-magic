@@ -6,8 +6,6 @@ import com.kivi.banking.service.TransferService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
-import org.junit.runners.JUnit4;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -15,7 +13,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.math.BigDecimal;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransferJobTest {
@@ -78,6 +75,5 @@ public class TransferJobTest {
         verify(accountService, times(0)).addAmountToAccount(validTransferDetail.getAmount(), validTransferDetail.getBorrowerAccountId());
         verify(transferService).applyTransfer(any());
     }
-
 
 }

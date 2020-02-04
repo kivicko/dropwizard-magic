@@ -9,7 +9,6 @@ import io.dropwizard.jobs.annotations.Every;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -30,14 +29,14 @@ public class TransferJob extends Job {
     @Override
     public void doJob(JobExecutionContext context) {
         TransferDetail nextDetail = transferService.getNextDetail();
-        if(nextDetail == null) {
+        if (nextDetail == null) {
             return;
         }
         BigDecimal amount = nextDetail.getAmount();
         Long borrowerAccountId = nextDetail.getBorrowerAccountId();
         Long lenderAccountId = nextDetail.getLenderAccountId();
 
-        if(accountService.checkAccountExists(borrowerAccountId)) {
+        if (accountService.checkAccountExists(borrowerAccountId)) {
             accountService.addAmountToAccount(amount, borrowerAccountId);
             log.info(SystemMessage.AMOUNT_TRANSFERRED, amount, borrowerAccountId);
         } else {

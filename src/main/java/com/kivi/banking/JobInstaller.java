@@ -1,12 +1,11 @@
 package com.kivi.banking;
 
-
-import ru.vyarus.dropwizard.guice.module.installer.util.Reporter;
 import io.dropwizard.setup.Environment;
 import org.quartz.Job;
 import ru.vyarus.dropwizard.guice.module.installer.FeatureInstaller;
 import ru.vyarus.dropwizard.guice.module.installer.install.TypeInstaller;
 import ru.vyarus.dropwizard.guice.module.installer.util.FeatureUtils;
+import ru.vyarus.dropwizard.guice.module.installer.util.Reporter;
 
 public class JobInstaller implements FeatureInstaller<Job>, TypeInstaller<Job> {
 

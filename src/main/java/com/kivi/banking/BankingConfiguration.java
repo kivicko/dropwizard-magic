@@ -2,8 +2,8 @@ package com.kivi.banking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
-import org.hibernate.validator.constraints.NotEmpty;
 import io.dropwizard.jobs.JobConfiguration;
+import org.hibernate.validator.constraints.NotEmpty;
 import ru.vyarus.dropwizard.guice.module.yaml.bind.Config;
 
 import javax.validation.constraints.Max;

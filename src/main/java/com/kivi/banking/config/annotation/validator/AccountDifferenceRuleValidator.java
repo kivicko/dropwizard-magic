@@ -9,18 +9,17 @@ import javax.validation.ConstraintValidatorContext;
 
 public class AccountDifferenceRuleValidator implements ConstraintValidator<AccountDifferenceRule, TransferDetail> {
 
-        @Override
-        public void initialize(AccountDifferenceRule date) {
-            // Nothing here
+    @Override
+    public void initialize(AccountDifferenceRule date) {
+        // Nothing here
+    }
+
+    @Override
+    public boolean isValid(TransferDetail detail, ConstraintValidatorContext constraintValidatorContext) {
+        if (detail.getLenderAccountId() == null || detail.getBorrowerAccountId() == null) {
+            return false;
         }
 
-        @Override
-        public boolean isValid(TransferDetail detail, ConstraintValidatorContext constraintValidatorContext) {
-            if(detail.getLenderAccountId() == null || detail.getBorrowerAccountId() == null) {
-                return false;
-            }
-
-            return BooleanUtils.isFalse(detail.getLenderAccountId().equals(detail.getBorrowerAccountId()));
-        }
+        return BooleanUtils.isFalse(detail.getLenderAccountId().equals(detail.getBorrowerAccountId()));
+    }
 }
-

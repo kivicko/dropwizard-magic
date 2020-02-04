@@ -32,4 +32,9 @@ public class TransferServiceImpl implements TransferService {
     public TransferDetail getNextDetail() {
         return transferDetailQueue.poll();
     }
+
+    //for testing purposes.
+    public void setTransferDetailQueue(Queue<TransferDetail> queue) {
+        transferDetailQueue = queue;
+    }
 }

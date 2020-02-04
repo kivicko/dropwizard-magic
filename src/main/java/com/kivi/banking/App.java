@@ -29,7 +29,7 @@ public class App extends Application<BankingConfiguration> {
         bootstrap.addBundle(guiceBundle);
     }
 
-    public static void main(String[] args ) throws Exception {
+    public static void main(String[] args) throws Exception {
         new App().run(args);
     }
 }

@@ -9,10 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.*;
+import javax.ws.rs.core.Response.Status;
 
 @Path("/transfer")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,10 +34,10 @@ public class TransferResource {
 
     @POST
     public Response makeTransfer(@Valid TransferDetail transferDetail) {
-        if(!accountService.checkAccountExists(transferDetail.getLenderAccountId())) {
+        if (!accountService.checkAccountExists(transferDetail.getLenderAccountId())) {
             return Response.status(Status.NOT_FOUND).entity(SystemMessage.RESOURCE_RESPONSE.LENDER_NOT_EXIST).build();
         }
-        if(!accountService.isAccountBalanceEnoughForTransfer(transferDetail.getAmount(), transferDetail.getLenderAccountId())) {
+        if (!accountService.isAccountBalanceEnoughForTransfer(transferDetail.getAmount(), transferDetail.getLenderAccountId())) {
             return Response.status(Status.NOT_ACCEPTABLE).entity(SystemMessage.RESOURCE_RESPONSE.NOT_ENOUGH_BALANCE).build();
         }
         transferService.applyTransfer(transferDetail);

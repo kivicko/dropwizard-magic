@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Singleton
 public class AccountServiceImpl implements AccountService {
 
-    private ConcurrentHashMap<Long, Account> accountMap;
+    private ConcurrentHashMap<Long, Account> accountMap = new ConcurrentHashMap<Long, Account>();
 
     public AccountServiceImpl() {
         Account acc1 = Account.builder()
@@ -27,8 +27,6 @@ public class AccountServiceImpl implements AccountService {
                 .id(11L)
                 .build();
 
-
-        this.accountMap = new ConcurrentHashMap<Long, Account>();
         accountMap.put(acc1.getId(), acc1);
         accountMap.put(acc2.getId(), acc2);
     }
@@ -60,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean isAccountBalanceEnoughForTransfer(BigDecimal amount, Long accountId) {
-        if(!accountMap.containsKey(accountId)) {
+        if (!accountMap.containsKey(accountId)) {
             return false;
         }
 
@@ -70,6 +68,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deductMoneyFromAccount(BigDecimal amount, Long lenderAccountId) {
-        accountMap.get(lenderAccountId).subtractAmount(amount.negate());
+        accountMap.get(lenderAccountId).subtractAmount(amount);
+    }
+
+    //for testing purposes
+    public void setAccountMap(ConcurrentHashMap<Long, Account> newAccountMap) {
+        accountMap = newAccountMap;
     }
 }

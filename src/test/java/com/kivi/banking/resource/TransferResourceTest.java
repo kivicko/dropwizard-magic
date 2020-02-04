@@ -1,13 +1,9 @@
 package com.kivi.banking.resource;
 
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
 import com.kivi.banking.config.SystemMessage;
 import com.kivi.banking.representation.TransferDetail;
 import com.kivi.banking.service.AccountService;
 import com.kivi.banking.service.TransferService;
-import com.sun.xml.internal.fastinfoset.util.StringArray;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.Before;
@@ -17,10 +13,10 @@ import org.junit.jupiter.api.AfterEach;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
-
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class TransferResourceTest {
