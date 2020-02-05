@@ -8,6 +8,10 @@ This project is basically money lending API at its minimum.
 
 You can create some accounts, send and receive money through API.
 
+It has unit tests for all possible cases. 
+
+Also has an integration test for happy path
+
 It will accept the transfer requests and save them in a Queue. 
 Has integrated job classes to perform every second on this queues items.
 
