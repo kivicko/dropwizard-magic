@@ -61,7 +61,7 @@ public class TransferServiceImplTest {
         service.applyTransfer(validTransferDetail);
 
         verify(accountService).deductMoneyFromAccount(validTransferDetail.getAmount(), validTransferDetail.getLenderAccountId());
-        ;
+
         verify(transferDetailQueue).add(validTransferDetail);
     }
 
@@ -74,5 +74,4 @@ public class TransferServiceImplTest {
         assertNotNull(nextDetail);
         assertEquals(validTransferDetail, nextDetail);
     }
-
 }

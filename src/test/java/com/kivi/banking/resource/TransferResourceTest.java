@@ -6,10 +6,10 @@ import com.kivi.banking.service.AccountService;
 import com.kivi.banking.service.TransferService;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.eclipse.jetty.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
@@ -39,15 +39,13 @@ public class TransferResourceTest {
                 .build();
     }
 
-    @AfterEach
+    @After
     public void afterEach() {
         resetServices();
     }
 
     @Test
     public void shouldReturnFailedWhenBorrowerAccountIdIsNull() {
-        resetServices();
-
         TransferDetail invalidTransferDetail = TransferDetail.builder()
                 .id(100L)
                 .lenderAccountId(99L)
@@ -66,8 +64,6 @@ public class TransferResourceTest {
 
     @Test
     public void shouldReturnFailedWhenLenderAccountIdIsNull() {
-        resetServices();
-
         TransferDetail invalidTransferDetail = TransferDetail.builder()
                 .id(100L)
                 .borrowerAccountId(99L)
@@ -86,8 +82,6 @@ public class TransferResourceTest {
 
     @Test
     public void shouldReturnFailedWhenIdIsNull() {
-        resetServices();
-
         TransferDetail invalidTransferDetail = TransferDetail.builder()
                 .borrowerAccountId(99L)
                 .lenderAccountId(100L)
@@ -106,8 +100,6 @@ public class TransferResourceTest {
 
     @Test
     public void shouldReturnFailedWhenAmountIsNull() {
-        resetServices();
-
         TransferDetail invalidTransferDetail = TransferDetail.builder()
                 .id(999L)
                 .borrowerAccountId(99L)
@@ -126,8 +118,6 @@ public class TransferResourceTest {
 
     @Test
     public void shouldReturnFailedWhenLenderAccountNotExist() {
-        resetServices();
-
         when(accountService.checkAccountExists(validTransferDetail.getLenderAccountId())).thenReturn(false);
 
         Response response = resource.target("/transfer")
@@ -141,13 +131,11 @@ public class TransferResourceTest {
         verifyZeroInteractions(transferService);
 
         String responseMessage = response.readEntity(String.class);
-        assertEquals(SystemMessage.RESOURCE_RESPONSE.LENDER_NOT_EXIST, responseMessage);
+        assertEquals(SystemMessage.ResourceResponse.LENDER_NOT_EXIST, responseMessage);
     }
 
     @Test
     public void shouldReturnFailedWhenAccountBalanceNotEnough() {
-        resetServices();
-
         when(accountService.checkAccountExists(validTransferDetail.getLenderAccountId())).thenReturn(true);
         when(accountService.isAccountBalanceEnoughForTransfer(validTransferDetail.getAmount(),
                 validTransferDetail.getLenderAccountId()))
@@ -166,13 +154,11 @@ public class TransferResourceTest {
         verifyZeroInteractions(transferService);
 
         String responseMessage = response.readEntity(String.class);
-        assertEquals(SystemMessage.RESOURCE_RESPONSE.NOT_ENOUGH_BALANCE, responseMessage);
+        assertEquals(SystemMessage.ResourceResponse.NOT_ENOUGH_BALANCE, responseMessage);
     }
 
     @Test
     public void shouldMakeTransferWhenTransferDetailIsValid() {
-        resetServices();
-
         when(accountService.checkAccountExists(validTransferDetail.getLenderAccountId())).thenReturn(true);
         when(accountService.isAccountBalanceEnoughForTransfer(validTransferDetail.getAmount(),
                 validTransferDetail.getLenderAccountId()))
@@ -190,7 +176,7 @@ public class TransferResourceTest {
         verify(transferService).applyTransfer(validTransferDetail);
 
         String responseMessage = response.readEntity(String.class);
-        assertEquals(SystemMessage.RESOURCE_RESPONSE.SUBMITTED, responseMessage);
+        assertEquals(SystemMessage.ResourceResponse.SUBMITTED, responseMessage);
     }
 
     private void resetServices() {

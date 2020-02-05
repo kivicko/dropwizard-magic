@@ -9,9 +9,10 @@ public class SystemMessage {
 
     public static final String AMOUNT_TRANSFERRED = "Amount (total : {}) added to borrower (id : {}) account.";
 
-    public static class RESOURCE_RESPONSE {
+    public static class ResourceResponse {
         public static final String LENDER_NOT_EXIST = "Lender account does not exist.";
         public static final String NOT_ENOUGH_BALANCE = "Not enough balance.";
         public static final String SUBMITTED = "Your request submitted.";
+        public static final Object ACCOUNT_ID_EXISTS = "Account id already exists.";
     }
 }

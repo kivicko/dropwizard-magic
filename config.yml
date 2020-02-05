@@ -1,3 +1,0 @@
-message: This is a message assigned in configuration.yaml
-messageRepetitions: 3
-bean-discovery-mode="all"

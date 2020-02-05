@@ -35,13 +35,13 @@ public class TransferResource {
     @POST
     public Response makeTransfer(@Valid TransferDetail transferDetail) {
         if (!accountService.checkAccountExists(transferDetail.getLenderAccountId())) {
-            return Response.status(Status.NOT_FOUND).entity(SystemMessage.RESOURCE_RESPONSE.LENDER_NOT_EXIST).build();
+            return Response.status(Status.NOT_FOUND).entity(SystemMessage.ResourceResponse.LENDER_NOT_EXIST).build();
         }
         if (!accountService.isAccountBalanceEnoughForTransfer(transferDetail.getAmount(), transferDetail.getLenderAccountId())) {
-            return Response.status(Status.NOT_ACCEPTABLE).entity(SystemMessage.RESOURCE_RESPONSE.NOT_ENOUGH_BALANCE).build();
+            return Response.status(Status.NOT_ACCEPTABLE).entity(SystemMessage.ResourceResponse.NOT_ENOUGH_BALANCE).build();
         }
         transferService.applyTransfer(transferDetail);
 
-        return Response.ok(SystemMessage.RESOURCE_RESPONSE.SUBMITTED).build();
+        return Response.ok(SystemMessage.ResourceResponse.SUBMITTED).build();
     }
 }

@@ -1,2 +1,7 @@
 message: This is a message assigned in configuration.yaml
 messageRepetitions: 3
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
